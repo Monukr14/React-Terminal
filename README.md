@@ -9,3 +9,7 @@
 # Clone this repo 
 # Install dependencied (npm install)
 # Run the project (npm start)
+
+# Video Reference 
+[![SC2 Video](https://drive.google.com/file/d/14gOdLwp-d28BwwbDMddiyh1oxv9Ze8Fl/view)]
+
