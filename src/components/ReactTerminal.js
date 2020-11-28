@@ -64,7 +64,7 @@ export default class ReactTerminal extends Component {
               method: (args, print, runCommand) => {
                 var query = args._[0];
                 this.github_graphql_search_query(query);
-                print(`The search is for ${query}`);
+                // print(`The search is for ${query}`);
                 print(
                   <>
                     {this.state.a ? (
@@ -80,9 +80,7 @@ export default class ReactTerminal extends Component {
                           </p>
                         ))}
                       </div>
-                    ) : (
-                      <p>False</p>
-                    )}
+                    ) : ""}
                   </>
                 );
               },
