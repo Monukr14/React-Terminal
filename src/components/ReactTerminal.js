@@ -24,7 +24,7 @@ export default class ReactTerminal extends Component {
   //                  node {
   //                    ... on Repository {
   //                      name
-  //                      homepageUrl
+  //                      url
   //                    }
   //                  }
   //                }
@@ -72,7 +72,7 @@ export default class ReactTerminal extends Component {
                            node {
                              ... on Repository {
                                name
-                               homepageUrl
+                               url
                              }
                            }
                          }
@@ -83,8 +83,8 @@ export default class ReactTerminal extends Component {
               console.log('response data', result.data.data.search.edges)
               result.data.data.search.edges.map(d => {
                 return(
-                  <> {print(`${d.node.name}  :   ${d.node.homepageUrl}`)}
-                     {/* {print(`${d.node.homepageUrl}`)} */}
+                  <> {print(`${d.node.name}  :   ${d.node.url}`)}
+                     {/* {print(`${d.node.url}`)} */}
                   </>
                 )
               })
