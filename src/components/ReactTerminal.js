@@ -3,7 +3,7 @@ import Terminal from "terminal-in-react";
 import axios from "axios";
 const API_URL = "https://api.github.com/graphql";
 
-const token = "0f7d168720e04c2002bb73468c73edde564aa2ee";
+const token = "5b9301027a3f23a76770d88dd76dde8eea126368";
 export default class ReactTerminal extends Component {
     state = {
         api_response: [],
@@ -12,32 +12,32 @@ export default class ReactTerminal extends Component {
 
       //   Function of Graphql Start
 
-  github_graphql_search_query = (query) => {
-    axios({
-      url: API_URL,
-      method: "post",
-      headers: { Authorization: `Bearer ${token}` },
-      data: {
-        query: `{
-               search(query: "${query}", type: REPOSITORY, first: 10) {
-                 edges {
-                   node {
-                     ... on Repository {
-                       name
-                       homepageUrl
-                     }
-                   }
-                 }
-               }
-           }`,
-      },
-    }).then((result) => {
-      this.setState({
-        api_response: result.data.data.search,
-        a: true,
-      });
-    });
-  };
+  // github_graphql_search_query = (query) => {
+  //   axios({
+  //     url: API_URL,
+  //     method: "post",
+  //     headers: { Authorization: `Bearer ${token}` },
+  //     data: {
+  //       query: `{
+  //              search(query: "${query}", type: REPOSITORY, first: 10) {
+  //                edges {
+  //                  node {
+  //                    ... on Repository {
+  //                      name
+  //                      homepageUrl
+  //                    }
+  //                  }
+  //                }
+  //              }
+  //          }`,
+  //     },
+  //   }).then((result) => {
+  //     this.setState({
+  //       api_response: result.data.data.search,
+  //       a: true,
+  //     });
+  //   });
+  // };
 
   //  Function of Graphql End
 
@@ -59,33 +59,65 @@ export default class ReactTerminal extends Component {
           backgroundColor="black"
           barColor="black"
           style={{ fontWeight: "bold", fontSize: "1em" }}
-          commands={{
-            search: {
-              method: (args, print, runCommand) => {
-                var query = args._[0];
-                this.github_graphql_search_query(query);
-                // print(`The search is for ${query}`);
-                print(
-                  <>
-                    {this.state.a ? (
-                      <div>
-                        {this.state.api_response.edges.map((d, id) => (
-                          <p key={id}>
-                            <span style={{ color: "yellow" }}>
-                              {d.node.name}{" "}
-                              <span style={{ color: "blue" }}>
-                                {d.node.homepageUrl}
-                              </span>{" "}
-                            </span>
-                          </p>
-                        ))}
-                      </div>
-                    ) : ""}
-                  </>
-                );
+          commandPassThrough = {(cmd,print) => {
+            // do something async
+            axios({
+              url: API_URL,
+              method: "post",
+              headers: { Authorization: `Bearer ${token}` },
+              data: {
+                query: `{
+                       search(query: "${cmd}", type: REPOSITORY, first: 10) {
+                         edges {
+                           node {
+                             ... on Repository {
+                               name
+                               homepageUrl
+                             }
+                           }
+                         }
+                       }
+                   }`,
               },
-            },
+            }).then((result) => {
+              console.log('response data', result.data.data.search.edges)
+              result.data.data.search.edges.map(d => {
+                return(
+                  <> {print(`${d.node.name}  :   ${d.node.homepageUrl}`)}
+                     {/* {print(`${d.node.homepageUrl}`)} */}
+                  </>
+                )
+              })
+              
+            });
           }}
+          // commands={{
+          //   search: {
+          //     method: (args, print, runCommand) => {
+          //       var query = args._[0];
+          //       this.github_graphql_search_query(query);
+          //       // print(`The search is for ${query}`);
+          //       print(
+          //         <>
+          //           {this.state.a ? (
+          //             <div>
+          //               {this.state.api_response.edges.map((d, id) => (
+          //                 <p key={id}>
+          //                   <span style={{ color: "yellow" }}>
+          //                     {d.node.name}{" "}
+          //                     <span style={{ color: "blue" }}>
+          //                       {d.node.homepageUrl}
+          //                     </span>{" "}
+          //                   </span>
+          //                 </p>
+          //               ))}
+          //             </div>
+          //           ) : ""}
+          //         </>
+          //       );
+          //     },
+          //   },
+          // }}
           descriptions={{
             search: "Search by Repo Name",
           }}
