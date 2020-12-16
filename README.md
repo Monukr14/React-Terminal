@@ -10,6 +10,8 @@
 # Install dependencied (npm install)
 # Run the project (npm start)
 
+After Running This Project A terminal will be opened, and you can type any repositry name and it will filter with github api and it will show top 10 result.
+
 # Video Reference 
 https://drive.google.com/file/d/14gOdLwp-d28BwwbDMddiyh1oxv9Ze8Fl/view
 
